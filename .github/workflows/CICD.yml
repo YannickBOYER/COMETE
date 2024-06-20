@@ -15,14 +15,14 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v3
             - name: Setup .NET
               uses: actions/setup-dotnet@v4
               with:
                 dotnet-version: '7.0.x'
             - name: Run linter
               run: dotnet tool install -g dotnet-format && dotnet format --check
-              working-directory: ../back
+              working-directory: back
     build:
         runs-on: ubuntu-22.04
         steps:
@@ -34,9 +34,9 @@ jobs:
                 dotnet-version: '7.0.x'
             - name: Restore dependencies
               run: dotnet restore
-              working-directory: ../back
+              working-directory: back
             - name: Build .NET
               run: dotnet build
-              working-directory: ../back
+              working-directory: back
             - name: Test
               run: dotnet test --no-build --verbosity normal
