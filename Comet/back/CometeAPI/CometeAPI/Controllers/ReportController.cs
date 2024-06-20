@@ -6,7 +6,7 @@ namespace CometeAPI.Controllers;
 [Route("[controller]")]
 public class ReportController : ControllerBase
 {
-    [HttpPost("generate")]
+    [HttpGet("generate")]
     public async Task<IActionResult> Generate()
     {
         /*if (file == null || file.Length == 0)
