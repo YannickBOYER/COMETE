@@ -1,19 +1,29 @@
+using CometeAPI.Domain;
+using CometeAPI.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CometeAPI;
+namespace CometeAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
 public class ReportController : ControllerBase
 {
-    [HttpPost("generate")]
-    public async Task<IActionResult> Generate()
-    {
-        /*if (file == null || file.Length == 0)
-            return BadRequest("No file uploaded.");
+    private readonly OpenAiService _openAiService;
 
-        var text = await _fileService.ExtractTextAsync(file);
-        var response = await _fileService.ProcessTextWithOpenAIAsync(text);*/
-        return Ok();
+    public ReportController(OpenAiService openAiService)
+    {
+        _openAiService = openAiService;
+    }
+
+    [HttpPost("generate")]
+    public async Task<IActionResult> Generate([FromBody] ReportRequest request)
+    {
+        if (string.IsNullOrEmpty(request.Text))
+        {
+            return BadRequest("Pas de texte à résumer.");
+        }
+
+        var completion = await _openAiService.GetResumeAsync(request.Text);
+        return Ok(completion);
     }
 }
