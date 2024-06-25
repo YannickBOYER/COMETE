@@ -1,3 +1,6 @@
+using CometeAPI.Application;
+using CometeAPI.Application.Service;
+using CometeAPI.Domain.repositories;
 using CometeAPI.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +12,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<OpenAiService>();
+builder.Services.AddScoped<IReportRepository, ReportRepository>();
+builder.Services.AddScoped<ReportService>();
 
 var app = builder.Build();
 

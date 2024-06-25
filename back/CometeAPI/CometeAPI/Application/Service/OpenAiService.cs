@@ -1,7 +1,7 @@
 using System.ClientModel;
 using OpenAI.Chat;
 
-namespace CometeAPI.Infrastructure;
+namespace CometeAPI.Application.Service;
 
 public class OpenAiService
 {
@@ -21,7 +21,7 @@ public class OpenAiService
     public async Task<string> GetResumeAsync(string prompt)
     {
         ChatCompletion completion = await _client.CompleteChatAsync(prompt);
-    
+
         // On extrait uniquement le texte de la réponse
         var textParts = completion.Content
             .Where(part => !string.IsNullOrEmpty(part.Text))
@@ -30,5 +30,4 @@ public class OpenAiService
 
         return string.Join("\n", textParts);
     }
-
 }

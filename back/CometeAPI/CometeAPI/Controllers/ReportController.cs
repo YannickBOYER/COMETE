@@ -1,5 +1,6 @@
-using CometeAPI.Domain;
-using CometeAPI.Infrastructure;
+using CometeAPI.Application;
+using CometeAPI.Application.DTO.@in;
+using CometeAPI.Domain.models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CometeAPI.Controllers;
@@ -8,22 +9,23 @@ namespace CometeAPI.Controllers;
 [Route("[controller]")]
 public class ReportController : ControllerBase
 {
-    private readonly OpenAiService _openAiService;
+    private readonly ReportService _reportService;
 
-    public ReportController(OpenAiService openAiService)
+    public ReportController(ReportService reportService)
     {
-        _openAiService = openAiService;
+        _reportService = reportService;
     }
 
     [HttpPost("generate")]
-    public async Task<IActionResult> Generate([FromBody] ReportRequest request)
+    public async Task<IActionResult> Generate([FromBody] ReportRequestDTO request)
     {
-        if (string.IsNullOrEmpty(request.Text))
+        try
         {
-            return BadRequest("Pas de texte à résumer.");
+            Report response = await _reportService.generate(request);
+            return Ok(response);
         }
-
-        var completion = await _openAiService.GetResumeAsync(request.Text);
-        return Ok(completion);
+        catch (Exception ex) { 
+            return BadRequest(ex.Message);
+        }
     }
 }
