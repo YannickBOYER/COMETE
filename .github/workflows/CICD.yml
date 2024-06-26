@@ -34,9 +34,10 @@ jobs:
                 dotnet-version: '7.0.x'
             - name: Restore dependencies
               run: dotnet restore
-              working-directory: back
+              working-directory: back/CometeAPI
             - name: Build .NET
               run: dotnet build
-              working-directory: back
+              working-directory: back/CometeAPI
             - name: Test
               run: dotnet test --no-build --verbosity normal
+              working-directory: back/CometeAPI
