@@ -1,5 +1,6 @@
 namespace CometeAPI.Domain.models;
 
+[Serializable]
 public class Report
 {
     private long id;
@@ -12,4 +13,8 @@ public class Report
         this.name = name;
         this.content = content;
     }
+
+    public long Id { get { return id; } set { id = value; } }
+    public string Name { get { return name; } set { name = value; } }
+    public string Content { get { return content; } set { content = value; } }
 }

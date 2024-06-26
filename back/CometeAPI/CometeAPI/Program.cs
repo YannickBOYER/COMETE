@@ -1,4 +1,5 @@
 using CometeAPI.Application;
+using CometeAPI.Application.mappers;
 using CometeAPI.Application.Service;
 using CometeAPI.Domain.repositories;
 using CometeAPI.Infrastructure;
@@ -14,6 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<OpenAiService>();
 builder.Services.AddScoped<IReportRepository, ReportRepository>();
 builder.Services.AddScoped<ReportService>();
+builder.Services.AddScoped<ReportMapper>();
 
 var app = builder.Build();
 

@@ -5,4 +5,5 @@ public class ReportRequestDTO
     public long IdUtilisateur {  get; set; }
     public string? FileName {  get; set; }
     public string? Text { get; set; }
+    public string? InstructionSupplementaire { get; set; }
 }

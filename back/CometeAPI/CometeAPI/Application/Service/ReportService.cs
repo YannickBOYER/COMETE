@@ -18,17 +18,8 @@ public class ReportService
 
     public async Task<Report> generate(ReportRequestDTO request)
     {
-        if (string.IsNullOrEmpty(request.Text))
-        {
-            throw new Exception("Pas de texte à résumer.");
-        }
         string content = await _openAiService.GetResumeAsync(request.Text);
-        string filename = "Nouveau compte rendu";
-        if (request.FileName != null)
-        {
-            filename = request.FileName;
-        }
-        Report report = _reportReporitory.save(filename, content);
-        return report;
+        Report newReport = _reportReporitory.save(request.FileName, content);
+        return newReport;
     }
 }
