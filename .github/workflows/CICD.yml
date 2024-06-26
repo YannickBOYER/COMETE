@@ -22,7 +22,7 @@ jobs:
                 dotnet-version: '7.0.x'
             - name: Run linter
               run: dotnet tool install -g dotnet-format && dotnet format --verify-no-changes
-              working-directory: back
+              working-directory: back/CometeAPI
     build:
         runs-on: ubuntu-22.04
         steps:
