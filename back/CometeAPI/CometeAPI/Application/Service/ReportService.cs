@@ -18,7 +18,7 @@ public class ReportService
 
     public async Task<Report> generate(ReportRequestDTO request)
     {
-        string content = await _openAiService.GetResumeAsync(request.Text);
+        string content = await _openAiService.GetResumeAsync(request.Text, request.InstructionSupplementaire);
         Report newReport = _reportReporitory.save(request.FileName, content);
         return newReport;
     }
