@@ -17,6 +17,9 @@ builder.Services.AddScoped<IReportRepository, ReportRepository>();
 builder.Services.AddScoped<ReportService>();
 builder.Services.AddScoped<ReportMapper>();
 
+builder.Services.AddScoped<IFolderRepository, FolderRepository>();
+builder.Services.AddScoped<FolderService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

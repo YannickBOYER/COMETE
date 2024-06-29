@@ -1,20 +1,16 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace CometeAPI.Domain.models;
 
-[Serializable]
 public class Report
 {
-    private long id;
-    private string name;
-    private string content;
+    public long Id { get; set; }
+    public string Name { get; set; }
+    public string Content { get; set; }
 
-    public Report(long id, string name, string content)
-    {
-        this.id = id;
-        this.name = name;
-        this.content = content;
-    }
+    [Column("folder_id")]
+    public long FolderId { get; set; }
 
-    public long Id { get { return id; } set { id = value; } }
-    public string Name { get { return name; } set { name = value; } }
-    public string Content { get { return content; } set { content = value; } }
+    // Propriété de navigation vers le Folder
+    public virtual Folder Folder { get; set; }
 }
