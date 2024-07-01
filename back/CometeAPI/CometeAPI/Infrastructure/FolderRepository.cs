@@ -1,3 +1,4 @@
+using CometeAPI.Application.DTO.@in;
 using CometeAPI.Domain.models;
 using CometeAPI.Domain.repositories;
 using Microsoft.EntityFrameworkCore;
@@ -15,5 +16,24 @@ public class FolderRepository : ApplicationDbContext, IFolderRepository
                .ToListAsync();
 
         return folders;
+    }
+
+    public async Task<Folder> create(FolderCreateRequestDTO requestDTO)
+    {
+        try
+        {
+            Folder folder = new Folder()
+            {
+                Name = requestDTO.Name,
+                UtilisateurId = requestDTO.IdUtilisateur,
+            };
+            Folders.Add(folder);
+            await SaveChangesAsync();
+            return folder;
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 }

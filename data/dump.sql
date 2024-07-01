@@ -1,3 +1,5 @@
+USE comete;
+
 -- Table Utilisateur
 CREATE TABLE Utilisateurs (
     id BIGINT NOT NULL AUTO_INCREMENT,

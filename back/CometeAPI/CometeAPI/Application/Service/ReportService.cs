@@ -2,6 +2,7 @@ using CometeAPI.Application.DTO.@in;
 using CometeAPI.Application.Service;
 using CometeAPI.Domain.models;
 using CometeAPI.Domain.repositories;
+using System.Runtime.InteropServices;
 
 namespace CometeAPI.Application;
 
@@ -16,10 +17,19 @@ public class ReportService
         _reportReporitory = reportReporitory;
     }
 
-    public async Task<Report> generate(ReportRequestDTO request)
+    public async Task<Report> save(ReportRequestDTO requestDTO)
     {
-        //string content = await _openAiService.GetResumeAsync(request.Text, request.InstructionSupplementaire);
-        Report newReport = await _reportReporitory.save(request.FileName, "Contenu du document", request.IdFolder);
+        Report newReport = await _reportReporitory.save(requestDTO);
         return newReport;
+    }
+
+    public async Task<string> getResume(ReportResumePromptRequestDTO requestDTO)
+    {
+        return await _openAiService.GetResumeAsync(requestDTO.Prompt, requestDTO.Instructions);
+    }
+
+    public async Task<Report> findById(long id)
+    {
+        return await _reportReporitory.findById(id);
     }
 }

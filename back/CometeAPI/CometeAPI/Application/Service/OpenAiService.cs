@@ -1,6 +1,5 @@
 using System.ClientModel;
 using OpenAI.Chat;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace CometeAPI.Application.Service;
 
@@ -19,8 +18,11 @@ public class OpenAiService
         _client = new ChatClient("gpt-4o", new ApiKeyCredential(apiKey));
     }
 
-    public async Task<string> GetResumeAsync(string prompt, string? instructions)
+    public async Task<string> GetResumeAsync(string? prompt, string? instructions)
     {
+        if (string.IsNullOrWhiteSpace(prompt)) { 
+            throw new ArgumentNullException(nameof(prompt));
+        }
         if (string.IsNullOrWhiteSpace(instructions)){
             prompt = $"Résumez le texte suivant sans aucune information supplémentaire ni mise en forme :\n\n{prompt}";
         }

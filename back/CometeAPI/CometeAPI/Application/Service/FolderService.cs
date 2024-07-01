@@ -1,3 +1,4 @@
+using CometeAPI.Application.DTO.@in;
 using CometeAPI.Application.DTO.@out;
 using CometeAPI.Domain.models;
 using CometeAPI.Domain.repositories;
@@ -28,5 +29,9 @@ public class FolderService
             Name = report.Name,
             Content = report.Content
         }).ToList(); ;
+    }
+
+    public async Task<Folder> save(FolderCreateRequestDTO requestDTO) {
+        return await _folderRepository.create(requestDTO);
     }
 }

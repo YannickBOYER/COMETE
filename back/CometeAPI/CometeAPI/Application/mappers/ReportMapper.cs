@@ -23,7 +23,6 @@ public class ReportMapper
         return reportRequestDTO;
     }
 
-
     private string verifyContent(string? content)
     {
         if (string.IsNullOrEmpty(content))

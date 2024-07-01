@@ -19,6 +19,7 @@ builder.Services.AddScoped<ReportMapper>();
 
 builder.Services.AddScoped<IFolderRepository, FolderRepository>();
 builder.Services.AddScoped<FolderService>();
+builder.Services.AddScoped<FolderMapper>();
 
 var app = builder.Build();
 

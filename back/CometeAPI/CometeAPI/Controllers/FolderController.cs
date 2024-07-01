@@ -1,4 +1,5 @@
 using CometeAPI.Application;
+using CometeAPI.Application.DTO.@in;
 using CometeAPI.Application.DTO.@out;
 using CometeAPI.Application.mappers;
 using CometeAPI.Domain.models;
@@ -12,18 +13,21 @@ namespace CometeAPI.Controllers;
 public class FolderController : ControllerBase
 {
     private readonly FolderService _folderService;
-    public FolderController(FolderService folderService)
+    private readonly FolderMapper _folderMapper;
+    public FolderController(FolderService folderService, FolderMapper folderMapper)
     {
         _folderService = folderService;
+        _folderMapper = folderMapper;
     }
     
     [HttpGet("")]
-    public async Task<ActionResult<Folder>> index([FromQuery] long idUtilisateur)
+    public async Task<ActionResult<List<FolderResponseDTO>>> index([FromQuery] long idUtilisateur)
     {
         try
         {
             List<Folder> folders = await _folderService.findAllByUtilisateur(idUtilisateur);
-            return Ok(folders);
+            List<FolderResponseDTO> foldersDTO = folders.Select(folder => _folderMapper.toDTO(folder)).ToList();
+            return Ok(foldersDTO);
         }
         catch (Exception ex) { 
             return BadRequest(ex.Message);
@@ -38,6 +42,19 @@ public class FolderController : ControllerBase
             return Ok(reports);
         }
         catch (Exception ex) {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<FolderResponseDTO>> save([FromBody] FolderCreateRequestDTO requestDTO)
+    {
+        try
+        {
+            Folder folder = await _folderService.save(requestDTO);
+            return Ok(_folderMapper.toDTO(folder));
+        }
+        catch (Exception ex) { 
             return BadRequest(ex.Message);
         }
     }
