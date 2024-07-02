@@ -1,5 +1,6 @@
 using CometeAPI.Application.DTO.@in;
 using CometeAPI.Application.DTO.@out;
+using CometeAPI.Domain.exception;
 using CometeAPI.Domain.models;
 using CometeAPI.Domain.repositories;
 
@@ -33,5 +34,30 @@ public class FolderService
 
     public async Task<Folder> save(FolderCreateRequestDTO requestDTO) {
         return await _folderRepository.create(requestDTO);
+    }
+
+    public async Task delete(long id)
+    {
+        List<Report> reports = await _reportReporitory.findAllByFolder(id);
+        if (reports.Count > 0) {
+            throw new FolderNotEmptyException();
+        }
+        await _folderRepository.delete(id);
+    }
+
+    public async Task<bool> exists(long id) {
+        return await _folderRepository.exists(id);
+    }
+
+    public async Task<Folder> update(FolderUpdateRequestDTO requestDTO)
+    {
+        if (await _folderRepository.exists(requestDTO.Id))
+        {
+            return await _folderRepository.update(requestDTO);
+        }
+        else
+        {
+            throw new FolderNotFoundException();
+        }
     }
 }

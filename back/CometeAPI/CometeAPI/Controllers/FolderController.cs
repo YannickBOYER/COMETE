@@ -58,4 +58,31 @@ public class FolderController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> delete(long id)
+    {
+        try
+        {
+            await _folderService.delete(id);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPut]
+    public async Task<ActionResult<FolderResponseDTO>> update([FromBody] FolderUpdateRequestDTO requestDTO)
+    {
+        try
+        {
+            Folder folder = await _folderService.update(requestDTO);
+            return Ok(_folderMapper.toDTO(folder));
+        }
+        catch (Exception ex) { 
+            return BadRequest(ex.Message);
+        }
+    }
 }

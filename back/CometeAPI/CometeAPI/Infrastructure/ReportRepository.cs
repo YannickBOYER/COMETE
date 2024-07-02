@@ -1,7 +1,10 @@
+using CometeAPI.Application;
 using CometeAPI.Application.DTO.@in;
+using CometeAPI.Domain.exception;
 using CometeAPI.Domain.models;
 using CometeAPI.Domain.repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.InteropServices;
 
 namespace CometeAPI.Infrastructure;
 
@@ -36,7 +39,7 @@ public class ReportRepository : ApplicationDbContext, IReportRepository
         }
         else
         {
-            throw new NotImplementedException();
+            throw new ReportNotFoundException();
         }
     }
 
@@ -47,5 +50,33 @@ public class ReportRepository : ApplicationDbContext, IReportRepository
             .Where(r => r.Folder.Id == folderId)
             .ToListAsync();
         return reports;
+    }
+
+    public async Task delete(long id)
+    {
+        Report report = await findById(id);
+        Reports.Remove(report);
+        await SaveChangesAsync();
+    }
+
+    public async Task<bool> exists(long id)
+    {
+        Report report = await findById(id);
+        return await Reports.ContainsAsync(report);
+    }
+
+    public async Task<Report> update(ReportUpdateRequestDTO requestDTO)
+    {
+        Report report = await findById(requestDTO.Id);
+        if (!string.IsNullOrWhiteSpace(requestDTO.Name))
+        {
+            report.Name = requestDTO.Name;
+        }
+        if (!string.IsNullOrWhiteSpace(requestDTO.Content))
+        {
+            report.Content = requestDTO.Content;
+        }
+        await SaveChangesAsync();
+        return report;
     }
 }

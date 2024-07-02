@@ -60,4 +60,31 @@ public class ReportController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> delete(long id)
+    {
+        try
+        {
+            await _reportService.delete(id);
+            return Ok();
+        }catch(Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPut]
+    public async Task<ActionResult<ReportResponseDTO>> update([FromBody] ReportUpdateRequestDTO requestDTO)
+    {
+        try
+        {
+            Report report = await _reportService.update(requestDTO);
+            return Ok(_reportMapper.toDTO(report));
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }

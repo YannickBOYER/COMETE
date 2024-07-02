@@ -1,4 +1,5 @@
 using CometeAPI.Application.DTO.@in;
+using CometeAPI.Domain.exception;
 using CometeAPI.Domain.models;
 using CometeAPI.Domain.repositories;
 using Microsoft.EntityFrameworkCore;
@@ -35,5 +36,42 @@ public class FolderRepository : ApplicationDbContext, IFolderRepository
         {
             throw;
         }
+    }
+
+    private async Task<Folder> findById(long id)
+    {
+        Folder? folder = await Folders.FindAsync(id);
+        if (folder != null)
+        {
+            return folder;
+        }
+        else
+        {
+            throw new FolderNotFoundException();
+        }
+    }
+
+    public async Task delete(long id)
+    {
+        Folder folder = await findById(id);
+        Folders.Remove(folder);
+        await SaveChangesAsync();
+    }
+
+    public async Task<bool> exists(long id)
+    {
+        Folder folder = await findById(id);
+        return await Folders.ContainsAsync(folder);
+    }
+
+    public async Task<Folder> update(FolderUpdateRequestDTO requestDTO)
+    {
+        Folder folder = await findById(requestDTO.Id);
+        if (string.IsNullOrWhiteSpace(folder.Name))
+        {
+            folder.Name = requestDTO.Name;
+        }
+        await SaveChangesAsync();
+        return folder;
     }
 }
