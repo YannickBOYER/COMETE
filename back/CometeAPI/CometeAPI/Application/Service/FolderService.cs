@@ -1,4 +1,4 @@
-using CometeAPI.Application.DTO.@in;
+using CometeAPI.Application.DTO.@in.Folder;
 using CometeAPI.Application.DTO.@out;
 using CometeAPI.Domain.exception;
 using CometeAPI.Domain.models;

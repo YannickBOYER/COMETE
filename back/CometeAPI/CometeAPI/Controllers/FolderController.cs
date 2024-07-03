@@ -1,5 +1,5 @@
 using CometeAPI.Application;
-using CometeAPI.Application.DTO.@in;
+using CometeAPI.Application.DTO.@in.Folder;
 using CometeAPI.Application.DTO.@out;
 using CometeAPI.Application.mappers;
 using CometeAPI.Domain.models;

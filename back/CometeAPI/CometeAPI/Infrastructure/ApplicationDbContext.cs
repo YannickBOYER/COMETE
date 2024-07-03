@@ -12,7 +12,7 @@ public abstract class ApplicationDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Utilisateur>()
-            .ToTable("Utilisateurs"); // Nom de la table spécifié ici
+            .ToTable("Utilisateurs");
 
         modelBuilder.Entity<Folder>()
             .ToTable("Folders");
@@ -20,9 +20,13 @@ public abstract class ApplicationDbContext : DbContext
         modelBuilder.Entity<Report>()
             .ToTable("Reports");
 
+        modelBuilder.Entity<FolderTag>()
+            .ToTable("Folder_tags")
+            .HasKey(ft => new { ft.FolderId, ft.TagId });
+
         modelBuilder.Entity<Report>()
-                .Property(r => r.FolderId)
-                .HasColumnName("folder_id");
+            .Property(r => r.FolderId)
+            .HasColumnName("folder_id");
 
         modelBuilder.Entity<Report>()
             .HasOne(r => r.Folder)
@@ -30,6 +34,17 @@ public abstract class ApplicationDbContext : DbContext
             .HasForeignKey(r => r.FolderId)
             .IsRequired();
 
+        modelBuilder.Entity<FolderTag>()
+            .HasOne(ft => ft.Folder)
+            .WithMany(f => f.FolderTags)
+            .HasForeignKey(ft => ft.FolderId);
+
+        modelBuilder.Entity<FolderTag>()
+            .HasOne(ft => ft.Tag)
+            .WithMany(t => t.FolderTags)
+            .HasForeignKey(ft => ft.TagId);
+
         base.OnModelCreating(modelBuilder);
     }
+
 }

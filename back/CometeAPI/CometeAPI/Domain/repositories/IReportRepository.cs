@@ -1,4 +1,4 @@
-using CometeAPI.Application.DTO.@in;
+using CometeAPI.Application.DTO.@in.Report;
 using CometeAPI.Domain.models;
 
 namespace CometeAPI.Domain.repositories;

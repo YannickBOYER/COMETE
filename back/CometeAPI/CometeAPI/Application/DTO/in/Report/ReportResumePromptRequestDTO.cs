@@ -1,4 +1,4 @@
-namespace CometeAPI.Application.DTO.@in;
+namespace CometeAPI.Application.DTO.@in.Report;
 
 [Serializable]
 public class ReportResumePromptRequestDTO

@@ -27,6 +27,19 @@ CREATE TABLE Reports (
     FOREIGN KEY (folder_id) REFERENCES Folders(id)
 );
 
+CREATE TABLE Tags (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Folder_tags (
+    folder_id BIGINT NOT NULL,
+    tag_id BIGINT NOT NULL,
+    PRIMARY KEY (folder_id, tag_id),
+    FOREIGN KEY (folder_id) REFERENCES Folders(id) ON DELETE CASCADE,
+    FOREIGN KEY (tag_id) REFERENCES Tags(id) ON DELETE CASCADE
+);
+
 -- Insertion d'un utilisateur
 INSERT INTO Utilisateurs (email, password)
 VALUES ('comete@esgi.fr', 'comete');

@@ -1,4 +1,4 @@
-using CometeAPI.Application.DTO.@in;
+using CometeAPI.Application.DTO.@in.Folder;
 using CometeAPI.Domain.exception;
 using CometeAPI.Domain.models;
 using CometeAPI.Domain.repositories;
@@ -67,7 +67,7 @@ public class FolderRepository : ApplicationDbContext, IFolderRepository
     public async Task<Folder> update(FolderUpdateRequestDTO requestDTO)
     {
         Folder folder = await findById(requestDTO.Id);
-        if (string.IsNullOrWhiteSpace(folder.Name))
+        if (!string.IsNullOrWhiteSpace(folder.Name))
         {
             folder.Name = requestDTO.Name;
         }

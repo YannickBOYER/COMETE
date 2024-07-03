@@ -16,4 +16,6 @@ public class Folder
 
     // Propriété de navigation vers les Reports
     public virtual ICollection<Report> Reports { get; set; }
+
+    public ICollection<FolderTag> FolderTags { get; set; }
 }
