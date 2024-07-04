@@ -8,4 +8,5 @@ public interface ITagRepository
     public Task<Tag> save(Tag tag);
     public Task delete(long id);
     public Task<List<Tag>> findAll();
+    public Task<bool> exists(long id);
 }

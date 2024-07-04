@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 namespace CometeAPI.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("Folders")]
 public class FolderController : ControllerBase
 {
     private readonly FolderService _folderService;
@@ -51,7 +51,7 @@ public class FolderController : ControllerBase
     {
         try
         {
-            Folder folder = await _folderService.save(requestDTO);
+            Folder folder = await _folderService.save(_folderMapper.toEntity(requestDTO));
             return Ok(_folderMapper.toDTO(folder));
         }
         catch (Exception ex) { 
@@ -78,7 +78,7 @@ public class FolderController : ControllerBase
     {
         try
         {
-            Folder folder = await _folderService.update(requestDTO);
+            Folder folder = await _folderService.update(_folderMapper.toEntity(requestDTO));
             return Ok(_folderMapper.toDTO(folder));
         }
         catch (Exception ex) { 

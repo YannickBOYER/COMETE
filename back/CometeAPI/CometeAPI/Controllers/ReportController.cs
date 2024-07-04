@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CometeAPI.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("Reports")]
 public class ReportController : ControllerBase
 {
     private readonly ReportService _reportService;
@@ -25,7 +25,7 @@ public class ReportController : ControllerBase
     {
         try
         {
-            Report response = await _reportService.save(_reportMapper.verifyRequest(requestDTO));
+            Report response = await _reportService.save(_reportMapper.toEntity(requestDTO));
             return Created(nameof(ReportResponseDTO), _reportMapper.toDTO(response));
         }
         catch (Exception ex) { 
@@ -79,7 +79,7 @@ public class ReportController : ControllerBase
     {
         try
         {
-            Report report = await _reportService.update(requestDTO);
+            Report report = await _reportService.update(_reportMapper.toEntity(requestDTO));
             return Ok(_reportMapper.toDTO(report));
         }
         catch (Exception ex)

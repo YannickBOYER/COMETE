@@ -17,7 +17,7 @@ public class FolderTagRepository : ApplicationDbContext, IFolderTagReporitory
             await SaveChangesAsync();
             return folderTag;
 
-        } catch (Exception ex) {
+        } catch (Exception) {
             throw;
         }
     }

@@ -1,4 +1,5 @@
 using CometeAPI.Application.DTO.@in.Tag;
+using CometeAPI.Domain.exception;
 using CometeAPI.Domain.models;
 using CometeAPI.Domain.repositories;
 
@@ -8,9 +9,11 @@ public class TagService
 {
     private readonly ITagRepository _tagRepository;
     private readonly IFolderTagReporitory _folderTagReporitory;
-    public TagService(ITagRepository tagRepository, IFolderTagReporitory folderTagReporitory) { 
+    private readonly FolderService _folderService;
+    public TagService(ITagRepository tagRepository, IFolderTagReporitory folderTagReporitory, FolderService folderService) { 
         _tagRepository = tagRepository;
         _folderTagReporitory = folderTagReporitory;
+        _folderService = folderService;
     }
 
     public async Task<Tag> create(Tag tag)
@@ -30,7 +33,15 @@ public class TagService
 
     public async Task<FolderTag> linkFolder(FolderTag folderTag)
     {
-        return await _folderTagReporitory.save(folderTag);
+        if (await _folderService.exists(folderTag.FolderId))
+        {
+            if(await _tagRepository.exists(folderTag.TagId))
+            {
+                return await _folderTagReporitory.save(folderTag);
+            }
+            throw new TagNotFoundException();
+        }
+        throw new FolderNotFoundException();  
     }
 
     public List<Folder> findFolderByTagId(long tagId)

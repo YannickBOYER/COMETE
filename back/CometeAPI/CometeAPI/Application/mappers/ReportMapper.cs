@@ -16,18 +16,43 @@ public class ReportMapper
         return dto;
     }
 
-    public ReportRequestDTO verifyRequest(ReportRequestDTO reportRequestDTO)
+    public Report toEntity(ReportRequestDTO report) { 
+        verifyRequest(report);
+        return new Report()
+        {
+            Name = report.FileName,
+            Content = report.Text,
+            FolderId = report.IdFolder,
+        };
+    }
+
+    public Report toEntity(ReportUpdateRequestDTO report)
+    {
+        verifyRequest(report);
+        return new Report()
+        {
+            Id = report.Id,
+            Name = report.Name,
+            Content = report.Content,
+        };
+    }
+
+    public void verifyRequest(ReportUpdateRequestDTO report)
+    {
+        report.Name = verifyFileName(report.Name);
+    }
+
+    public void verifyRequest(ReportRequestDTO reportRequestDTO)
     {
         reportRequestDTO.FileName = verifyFileName(reportRequestDTO.FileName);
         reportRequestDTO.Text = verifyContent(reportRequestDTO.Text);
-        return reportRequestDTO;
     }
 
     private string verifyContent(string? content)
     {
         if (string.IsNullOrEmpty(content))
         {
-            throw new Exception("Pas de texte à résumer.");
+            throw new EmptyPromptException();
         }
         if (content.Length > 1200)
         {

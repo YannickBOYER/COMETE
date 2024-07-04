@@ -36,4 +36,10 @@ public class TagRepository : ApplicationDbContext, ITagRepository
     {
         return await Tags.ToListAsync();
     }
+
+    public async Task<bool> exists(long id)
+    {
+        Tag tag = await findById(id);
+        return await Tags.ContainsAsync(tag);
+    }
 }

@@ -19,11 +19,11 @@ public class ReportService
         _folderService = folderService;
     }
 
-    public async Task<Report> save(ReportRequestDTO requestDTO)
+    public async Task<Report> save(Report report)
     {
-        if (await _folderService.exists(requestDTO.IdFolder))
+        if (await _folderService.exists(report.FolderId))
         {
-            Report newReport = await _reportReporitory.save(requestDTO);
+            Report newReport = await _reportReporitory.save(report);
             return newReport;
         }
         else
@@ -53,11 +53,11 @@ public class ReportService
         return await _reportReporitory.exists(id);
     }
 
-    public async Task<Report> update(ReportUpdateRequestDTO requestDTO)
+    public async Task<Report> update(Report report)
     {
-        if(await exists(requestDTO.Id))
+        if(await exists(report.Id))
         {
-            return await _reportReporitory.update(requestDTO);
+            return await _reportReporitory.update(report);
         }
         else
         {

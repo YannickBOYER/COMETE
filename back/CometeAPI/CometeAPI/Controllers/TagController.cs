@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CometeAPI.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("Tags")]
 public class TagController : ControllerBase
 {
     private readonly TagService _tagService;
@@ -36,12 +36,12 @@ public class TagController : ControllerBase
         }
     }
 
-    [HttpPost("linkFolder")]
-    public async Task<ActionResult<FolderTagResponseDTO>> linkFolder([FromBody] FolderTagCreationRequestDTO requestDTO)
+    [HttpPost("{id}/linkFolder")]
+    public async Task<ActionResult<FolderTagResponseDTO>> linkFolder(long id, [FromBody] FolderTagCreationRequestDTO requestDTO)
     {
         try
         {
-            FolderTag folderTag = await _tagService.linkFolder(_folderTagMapper.toEntity(requestDTO));
+            FolderTag folderTag = await _tagService.linkFolder(_folderTagMapper.toEntity(id, requestDTO.FolderId));
             return Ok(_folderTagMapper.toDTO(folderTag));
         }
         catch (Exception ex) {
@@ -49,12 +49,12 @@ public class TagController : ControllerBase
         }
     }
 
-    [HttpDelete("unlinkFolder")]
-    public async Task<ActionResult<FolderTagResponseDTO>> unlinkFolder([FromBody] FolderTagCreationRequestDTO requestDTO)
+    [HttpDelete("{id}/unlinkFolder")]
+    public async Task<ActionResult<FolderTagResponseDTO>> unlinkFolder(long id, [FromBody] FolderTagCreationRequestDTO requestDTO)
     {
         try
         {
-            await _tagService.unlink(_folderTagMapper.toEntity(requestDTO));
+            await _tagService.unlink(_folderTagMapper.toEntity(id, requestDTO.FolderId));
             return Ok();
         }
         catch (Exception ex)
@@ -63,7 +63,7 @@ public class TagController : ControllerBase
         }
     }
 
-    [HttpGet("/Tags")]
+    [HttpGet]
     public async Task<ActionResult<List<TagResponseDTO>>> findAll()
     {
         try 

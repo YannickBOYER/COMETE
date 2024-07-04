@@ -19,15 +19,10 @@ public class FolderRepository : ApplicationDbContext, IFolderRepository
         return folders;
     }
 
-    public async Task<Folder> create(FolderCreateRequestDTO requestDTO)
+    public async Task<Folder> create(Folder folder)
     {
         try
         {
-            Folder folder = new Folder()
-            {
-                Name = requestDTO.Name,
-                UtilisateurId = requestDTO.IdUtilisateur,
-            };
             Folders.Add(folder);
             await SaveChangesAsync();
             return folder;
@@ -64,12 +59,12 @@ public class FolderRepository : ApplicationDbContext, IFolderRepository
         return await Folders.ContainsAsync(folder);
     }
 
-    public async Task<Folder> update(FolderUpdateRequestDTO requestDTO)
+    public async Task<Folder> update(Folder newFolder)
     {
-        Folder folder = await findById(requestDTO.Id);
+        Folder folder = await findById(newFolder.Id);
         if (!string.IsNullOrWhiteSpace(folder.Name))
         {
-            folder.Name = requestDTO.Name;
+            folder.Name = newFolder.Name;
         }
         await SaveChangesAsync();
         return folder;

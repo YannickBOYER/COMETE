@@ -32,8 +32,8 @@ public class FolderService
         }).ToList(); ;
     }
 
-    public async Task<Folder> save(FolderCreateRequestDTO requestDTO) {
-        return await _folderRepository.create(requestDTO);
+    public async Task<Folder> save(Folder folder) {
+        return await _folderRepository.create(folder);
     }
 
     public async Task delete(long id)
@@ -49,11 +49,11 @@ public class FolderService
         return await _folderRepository.exists(id);
     }
 
-    public async Task<Folder> update(FolderUpdateRequestDTO requestDTO)
+    public async Task<Folder> update(Folder folder)
     {
-        if (await _folderRepository.exists(requestDTO.Id))
+        if (await _folderRepository.exists(folder.Id))
         {
-            return await _folderRepository.update(requestDTO);
+            return await _folderRepository.update(folder);
         }
         else
         {

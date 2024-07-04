@@ -11,22 +11,17 @@ namespace CometeAPI.Infrastructure;
 public class ReportRepository : ApplicationDbContext, IReportRepository
 {
     public DbSet<Report> Reports { get; set; }
-    public async Task<Report> save(ReportRequestDTO requestDTO)
+    public async Task<Report> save(Report report)
     {
         try
         {
-            Report report = new Report { 
-                Name = requestDTO.FileName,
-                Content = requestDTO.Text,
-                FolderId = requestDTO.IdFolder,
-            };
             Reports.Add(report);
             await SaveChangesAsync();
             return report;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            throw new Exception(ex.Message);
+            throw;
         }
     }
 
@@ -65,18 +60,18 @@ public class ReportRepository : ApplicationDbContext, IReportRepository
         return await Reports.ContainsAsync(report);
     }
 
-    public async Task<Report> update(ReportUpdateRequestDTO requestDTO)
+    public async Task<Report> update(Report report)
     {
-        Report report = await findById(requestDTO.Id);
-        if (!string.IsNullOrWhiteSpace(requestDTO.Name))
+        Report updatedReport = await findById(report.Id);
+        if (!string.IsNullOrWhiteSpace(report.Name))
         {
-            report.Name = requestDTO.Name;
+            updatedReport.Name = report.Name;
         }
-        if (!string.IsNullOrWhiteSpace(requestDTO.Content))
+        if (!string.IsNullOrWhiteSpace(report.Content))
         {
-            report.Content = requestDTO.Content;
+            updatedReport.Content = report.Content;
         }
         await SaveChangesAsync();
-        return report;
+        return updatedReport;
     }
 }
