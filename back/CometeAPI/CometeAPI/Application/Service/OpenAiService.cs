@@ -20,17 +20,18 @@ public class OpenAiService
 
     public async Task<string> GetResumeAsync(string? prompt, string? instructions)
     {
-        if (string.IsNullOrWhiteSpace(prompt)) { 
+        if (string.IsNullOrWhiteSpace(prompt))
+        {
             throw new ArgumentNullException(nameof(prompt));
         }
-        if (string.IsNullOrWhiteSpace(instructions)){
+        if (string.IsNullOrWhiteSpace(instructions))
+        {
             prompt = $"Résumez le texte suivant sans aucune information supplémentaire ni mise en forme :\n\n{prompt}";
         }
         else
         {
             prompt = $"Résumez le texte suivant sans aucune information supplémentaire ni mise en forme :\n\n Instructions à suivre : {instructions} \n\n{prompt}";
         }
-        
         ChatCompletion completion = await _client.CompleteChatAsync(prompt);
 
         // On extrait uniquement le texte de la réponse

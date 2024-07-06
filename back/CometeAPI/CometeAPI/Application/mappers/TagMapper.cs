@@ -6,7 +6,8 @@ namespace CometeAPI.Application.mappers;
 
 public class TagMapper
 {
-    public Tag toEntity(TagCreationRequestDTO dto) {
+    public Tag toEntity(TagCreationRequestDTO dto)
+    {
         if (!string.IsNullOrWhiteSpace(dto.Name))
         {
             return new Tag()
@@ -18,8 +19,10 @@ public class TagMapper
         throw new ArgumentNullException(nameof(dto.Name));
     }
 
-    public TagResponseDTO toDTO(Tag tag) {
-        return new TagResponseDTO() { 
+    public TagResponseDTO toDTO(Tag tag)
+    {
+        return new TagResponseDTO()
+        {
             Id = tag.Id,
             Name = tag.Name,
         };

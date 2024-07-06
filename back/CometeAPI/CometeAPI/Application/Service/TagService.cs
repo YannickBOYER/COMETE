@@ -10,7 +10,8 @@ public class TagService
     private readonly ITagRepository _tagRepository;
     private readonly IFolderTagReporitory _folderTagReporitory;
     private readonly FolderService _folderService;
-    public TagService(ITagRepository tagRepository, IFolderTagReporitory folderTagReporitory, FolderService folderService) { 
+    public TagService(ITagRepository tagRepository, IFolderTagReporitory folderTagReporitory, FolderService folderService)
+    {
         _tagRepository = tagRepository;
         _folderTagReporitory = folderTagReporitory;
         _folderService = folderService;
@@ -35,13 +36,13 @@ public class TagService
     {
         if (await _folderService.exists(folderTag.FolderId))
         {
-            if(await _tagRepository.exists(folderTag.TagId))
+            if (await _tagRepository.exists(folderTag.TagId))
             {
                 return await _folderTagReporitory.save(folderTag);
             }
             throw new TagNotFoundException();
         }
-        throw new FolderNotFoundException();  
+        throw new FolderNotFoundException();
     }
 
     public List<Folder> findFolderByTagId(long tagId)

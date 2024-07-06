@@ -7,7 +7,8 @@ namespace CometeAPI.Application.mappers;
 
 public class FolderTagMapper
 {
-    public FolderTag toEntity(long tagId, long? folderId) {
+    public FolderTag toEntity(long tagId, long? folderId)
+    {
         if (folderId != null)
         {
             return new FolderTag()
@@ -22,7 +23,8 @@ public class FolderTagMapper
 
     public FolderTagResponseDTO toDTO(FolderTag folderTag)
     {
-        return new FolderTagResponseDTO() { 
+        return new FolderTagResponseDTO()
+        {
             FolderId = folderTag.FolderId,
             TagId = folderTag.TagId,
         };

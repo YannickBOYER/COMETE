@@ -16,7 +16,8 @@ public class ReportMapper
         return dto;
     }
 
-    public Report toEntity(ReportRequestDTO report) { 
+    public Report toEntity(ReportRequestDTO report)
+    {
         verifyRequest(report);
         return new Report()
         {

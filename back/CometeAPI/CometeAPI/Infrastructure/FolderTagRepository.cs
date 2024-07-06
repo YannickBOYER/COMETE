@@ -17,7 +17,9 @@ public class FolderTagRepository : ApplicationDbContext, IFolderTagReporitory
             await SaveChangesAsync();
             return folderTag;
 
-        } catch (Exception) {
+        }
+        catch (Exception)
+        {
             throw;
         }
     }
@@ -33,9 +35,9 @@ public class FolderTagRepository : ApplicationDbContext, IFolderTagReporitory
 
     public async Task delete(long folderId, long tagId)
     {
-       FolderTag folderTag = findByIds(folderId, tagId);
-       FolderTags.Remove(folderTag);
-       await SaveChangesAsync();
+        FolderTag folderTag = findByIds(folderId, tagId);
+        FolderTags.Remove(folderTag);
+        await SaveChangesAsync();
     }
 
     private FolderTag findByIds(long folderId, long tagId)

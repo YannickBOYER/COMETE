@@ -28,7 +28,7 @@ public class ReportRepository : ApplicationDbContext, IReportRepository
     public async Task<Report> findById(long id)
     {
         Report? report = await Reports.FindAsync(id);
-        if(report != null)
+        if (report != null)
         {
             return report;
         }

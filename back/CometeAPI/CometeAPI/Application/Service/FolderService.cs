@@ -32,20 +32,23 @@ public class FolderService
         }).ToList(); ;
     }
 
-    public async Task<Folder> save(Folder folder) {
+    public async Task<Folder> save(Folder folder)
+    {
         return await _folderRepository.create(folder);
     }
 
     public async Task delete(long id)
     {
         List<Report> reports = await _reportReporitory.findAllByFolder(id);
-        if (reports.Count > 0) {
+        if (reports.Count > 0)
+        {
             throw new FolderNotEmptyException();
         }
         await _folderRepository.delete(id);
     }
 
-    public async Task<bool> exists(long id) {
+    public async Task<bool> exists(long id)
+    {
         return await _folderRepository.exists(id);
     }
 
