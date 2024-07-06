@@ -63,7 +63,7 @@ public class MigrationService : ApplicationDbContext, IHostedService
                 SELECT 1 FROM Utilisateurs WHERE email = 'comete@esgi.fr'
             );
         ";
-        if(await Database.CanConnectAsync())
+        if (await Database.CanConnectAsync())
         {
             Database.ExecuteSqlRaw(sql);
         }

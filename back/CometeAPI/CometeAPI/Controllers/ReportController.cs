@@ -68,7 +68,8 @@ public class ReportController : ControllerBase
         {
             await _reportService.delete(id);
             return Ok();
-        }catch(Exception ex)
+        }
+        catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }

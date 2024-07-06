@@ -29,8 +29,7 @@ public class ReportService
         else
         {
             throw new FolderNotFoundException();
-        }
-        
+        } 
     }
 
     public async Task<string> getResume(ReportResumePromptRequestDTO requestDTO)
@@ -55,7 +54,7 @@ public class ReportService
 
     public async Task<Report> update(Report report)
     {
-        if(await exists(report.Id))
+        if (await exists(report.Id))
         {
             return await _reportReporitory.update(report);
         }

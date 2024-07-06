@@ -19,7 +19,6 @@ public class FolderController : ControllerBase
         _folderService = folderService;
         _folderMapper = folderMapper;
     }
-    
     [HttpGet("")]
     public async Task<ActionResult<List<FolderResponseDTO>>> index([FromQuery] long idUtilisateur)
     {
@@ -29,19 +28,22 @@ public class FolderController : ControllerBase
             List<FolderResponseDTO> foldersDTO = folders.Select(folder => _folderMapper.toDTO(folder)).ToList();
             return Ok(foldersDTO);
         }
-        catch (Exception ex) { 
+        catch (Exception ex)
+        {
             return BadRequest(ex.Message);
         }
     }
 
     [HttpGet("{id}/reports")]
-    public async Task<ActionResult<List<ReportResponseDTO>>> getReports(long id) { 
+    public async Task<ActionResult<List<ReportResponseDTO>>> getReports(long id)
+    {
         try
         {
             List<ReportResponseDTO> reports = await _folderService.getReports(id);
             return Ok(reports);
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             return BadRequest(ex.Message);
         }
     }
@@ -54,7 +56,8 @@ public class FolderController : ControllerBase
             Folder folder = await _folderService.save(_folderMapper.toEntity(requestDTO));
             return Ok(_folderMapper.toDTO(folder));
         }
-        catch (Exception ex) { 
+        catch (Exception ex)
+        {
             return BadRequest(ex.Message);
         }
     }
@@ -81,7 +84,8 @@ public class FolderController : ControllerBase
             Folder folder = await _folderService.update(_folderMapper.toEntity(requestDTO));
             return Ok(_folderMapper.toDTO(folder));
         }
-        catch (Exception ex) { 
+        catch (Exception ex)
+        {
             return BadRequest(ex.Message);
         }
     }

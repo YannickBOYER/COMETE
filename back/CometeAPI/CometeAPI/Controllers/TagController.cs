@@ -31,7 +31,8 @@ public class TagController : ControllerBase
             Tag tag = await _tagService.create(_tagMapper.toEntity(requestDTO));
             return Created(nameof(Tag), _tagMapper.toDTO(tag));
         }
-        catch (Exception ex) { 
+        catch (Exception ex)
+        {
             return BadRequest(ex.Message);
         }
     }
@@ -44,7 +45,8 @@ public class TagController : ControllerBase
             FolderTag folderTag = await _tagService.linkFolder(_folderTagMapper.toEntity(id, requestDTO.FolderId));
             return Ok(_folderTagMapper.toDTO(folderTag));
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             return BadRequest(ex.Message);
         }
     }
@@ -66,13 +68,14 @@ public class TagController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<TagResponseDTO>>> findAll()
     {
-        try 
+        try
         {
             List<Tag> tags = await _tagService.findAll();
             List<TagResponseDTO> tagResponseDTOs = tags.Select(tag => _tagMapper.toDTO(tag)).ToList();
             return Ok(tagResponseDTOs);
-        } 
-        catch (Exception ex) { 
+        }
+        catch (Exception ex)
+        {
             return BadRequest(ex.Message);
         }
     }
@@ -86,7 +89,8 @@ public class TagController : ControllerBase
             List<FolderResponseDTO> foldersDTO = folders.Select(folder => _folderMapper.toDTO(folder)).ToList();
             return Ok(foldersDTO);
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             return BadRequest(ex.Message);
         }
     }
@@ -99,7 +103,8 @@ public class TagController : ControllerBase
             await _tagService.delete(id);
             return Ok();
         }
-        catch (Exception ex) { 
+        catch (Exception ex)
+        {
             return BadRequest(ex.Message);
         }
     }

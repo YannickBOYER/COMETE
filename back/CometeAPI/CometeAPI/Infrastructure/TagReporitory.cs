@@ -21,9 +21,11 @@ public class TagRepository : ApplicationDbContext, ITagRepository
         await SaveChangesAsync();
     }
 
-    private async Task<Tag> findById(long id) { 
+    private async Task<Tag> findById(long id)
+    {
         Tag? tag = await Tags.FindAsync(id);
-        if (tag != null) {
+        if (tag != null)
+        {
             return tag;
         }
         else
