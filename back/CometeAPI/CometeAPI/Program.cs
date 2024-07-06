@@ -17,6 +17,18 @@ builder.Services.AddScoped<IReportRepository, ReportRepository>();
 builder.Services.AddScoped<ReportService>();
 builder.Services.AddScoped<ReportMapper>();
 
+builder.Services.AddScoped<IFolderRepository, FolderRepository>();
+builder.Services.AddScoped<FolderService>();
+builder.Services.AddScoped<FolderMapper>();
+
+builder.Services.AddScoped<ITagRepository, TagRepository>();
+builder.Services.AddScoped<IFolderTagReporitory, FolderTagRepository>();
+builder.Services.AddScoped<TagService>();
+builder.Services.AddScoped<TagMapper>();
+builder.Services.AddScoped<FolderTagMapper>();
+
+builder.Services.AddHostedService<MigrationService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
