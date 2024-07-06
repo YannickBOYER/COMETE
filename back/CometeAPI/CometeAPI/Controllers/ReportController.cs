@@ -28,7 +28,8 @@ public class ReportController : ControllerBase
             Report response = await _reportService.save(_reportMapper.toEntity(requestDTO));
             return Created(nameof(ReportResponseDTO), _reportMapper.toDTO(response));
         }
-        catch (Exception ex) { 
+        catch (Exception ex)
+        {
             return BadRequest(ex.Message);
         }
     }

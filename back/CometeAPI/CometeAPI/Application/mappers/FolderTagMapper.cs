@@ -24,7 +24,7 @@ public class FolderTagMapper
     public FolderTagResponseDTO toDTO(FolderTag folderTag)
     {
         return new FolderTagResponseDTO()
-        { 
+        {
             FolderId = folderTag.FolderId,
             TagId = folderTag.TagId,
         };

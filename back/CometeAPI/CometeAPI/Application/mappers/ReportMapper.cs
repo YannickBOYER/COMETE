@@ -17,7 +17,7 @@ public class ReportMapper
     }
 
     public Report toEntity(ReportRequestDTO report)
-    { 
+    {
         verifyRequest(report);
         return new Report()
         {

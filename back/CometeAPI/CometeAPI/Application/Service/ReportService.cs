@@ -29,7 +29,7 @@ public class ReportService
         else
         {
             throw new FolderNotFoundException();
-        } 
+        }
     }
 
     public async Task<string> getResume(ReportResumePromptRequestDTO requestDTO)

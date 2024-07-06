@@ -22,7 +22,7 @@ public class TagMapper
     public TagResponseDTO toDTO(Tag tag)
     {
         return new TagResponseDTO()
-        { 
+        {
             Id = tag.Id,
             Name = tag.Name,
         };
