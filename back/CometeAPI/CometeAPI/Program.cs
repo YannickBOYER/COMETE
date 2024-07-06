@@ -27,6 +27,8 @@ builder.Services.AddScoped<TagService>();
 builder.Services.AddScoped<TagMapper>();
 builder.Services.AddScoped<FolderTagMapper>();
 
+builder.Services.AddHostedService<MigrationService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
