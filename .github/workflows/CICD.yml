@@ -1,0 +1,43 @@
+name: CI
+
+on:
+    push:
+        branches:
+            - main
+        tags:
+            - 'v*'
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    lint:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v4
+              with:
+                dotnet-version: '7.0.x'
+            - name: Run linter
+              run: dotnet tool install -g dotnet-format && dotnet format --verify-no-changes
+              working-directory: back/CometeAPI
+    build:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v4
+              with:
+                dotnet-version: '7.0.x'
+            - name: Restore dependencies
+              run: dotnet restore
+              working-directory: back/CometeAPI
+            - name: Build .NET
+              run: dotnet build
+              working-directory: back/CometeAPI
+            - name: Test
+              run: dotnet test --no-build --verbosity normal
+              working-directory: back/CometeAPI
