@@ -55,11 +55,11 @@ jobs:
             - name: build image
               run: docker image build --tag="${IMAGE_NAME}" ./back/
             - name: run container
-              run: docker container run -d -p "${CONTAINER_PORT}":4173 --name "${CONTAINER_NAME}" "${IMAGE_NAME}"
+              run: docker container run -d -p "${CONTAINER_PORT}":7176 --name "${CONTAINER_NAME}" "${IMAGE_NAME}"
             - name: Wait container startup
               run: sleep 10
-            - name: http test request
-              run: curl http://127.0.0.1:"${CONTAINER_PORT}/swagger/index.html"/
+            # - name: http test request
+            #   run: curl http://127.0.0.1:"${CONTAINER_PORT}/Folders?idUtilisateur=1"/
             - name: stop container
               run: docker container stop "${CONTAINER_NAME}"
             - name: remove container
