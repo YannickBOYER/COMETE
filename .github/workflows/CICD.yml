@@ -40,3 +40,60 @@ jobs:
               working-directory: back
             - name: Test
               run: dotnet test --no-build --verbosity normal
+    docker_test_back:
+        runs-on: ubuntu-22.04
+        env:
+          IMAGE_NAME: "comete-back-image"
+          CONTAINER_NAME: "comete-back-container"
+          CONTAINER_PORT: "7176"
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: build image
+              run: docker image build --tag="${IMAGE_NAME}" ./back/
+            - name: run container
+              run: docker container run -d -p "${CONTAINER_PORT}":4173 --name "${CONTAINER_NAME}" "${IMAGE_NAME}"
+            - name: Wait container startup
+              run: sleep 10
+            - name: http test request
+              run: curl http://127.0.0.1:"${CONTAINER_PORT}/swagger/index.html"/
+            - name: stop container
+              run: docker container stop "${CONTAINER_NAME}"
+            - name: remove container
+              run: docker container rm "${CONTAINER_NAME}"
+    deploy:
+      if: github.event_name == 'push' && contains('refs/heads/main', github.ref)
+      runs-on: ubuntu-22.04
+      needs: [lint,docker_test_back]
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+        - name: Login Docker Hub
+          uses: docker/login-action@v3
+          with:
+            username: ${{ secrets.DOCKERHUB_USERNAME }}
+            password: ${{ secrets.DOCKERHUB_TOKEN }}
+        - name: Push to Docker Hub
+          uses: docker/build-push-action@v4
+          with:
+            push: true
+            context: ./web-project
+            tags: ${{ secrets.DOCKERHUB_USERNAME }}/web-project:${{ github.ref_name }}
+    delivery:
+      if: startsWith(github.ref, 'refs/tags/v')
+      runs-on: ubuntu-22.04
+      needs: [lint,docker_test_back]
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+        - name: Login Docker Hub
+          uses: docker/login-action@v3
+          with:
+            username: ${{ secrets.DOCKERHUB_USERNAME }}
+            password: ${{ secrets.DOCKERHUB_TOKEN }}
+        - name: Push to Docker Hub
+          uses: docker/build-push-action@v4
+          with:
+            push: true
+            context: ./web-project
+            tags: ${{ secrets.DOCKERHUB_USERNAME }}/web-project:${{ github.ref_name }}
