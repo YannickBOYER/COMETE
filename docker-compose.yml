@@ -7,13 +7,13 @@ services:
     ports:
       - "7176:7176"
     container_name: comete-back
-  # front:
-  #   build:
-  #     context: ./front
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "3000:3000"
-  #   container_name: comete-front
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    container_name: comete-front
   mysql:
     image: mysql:latest
     container_name: mysql
