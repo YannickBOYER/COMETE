@@ -1,0 +1,71 @@
+.input-container,
+.response-container {
+  display: flex;
+  height: 30vh;
+  gap: 20px;
+  margin: 30px 10%;
+}
+
+.file-upload-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 2px dashed #aaa;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  width: 75%;
+  border-radius: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.upload-area {
+  display: flex; /* Utilisation de flexbox */
+  flex-direction: column; /* Empiler verticalement */
+  align-items: center; /* Centrer horizontalement */
+  flex: 1; /* Prendre tout l'espace disponible */
+  cursor: pointer;
+}
+
+.upload-area img {
+  width: 50px;
+  height: 50px;
+}
+
+.text-input {
+  width: 80%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: auto;
+}
+
+.instruction-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* Prendre le reste de l'espace */
+}
+
+.instruction-container p {
+  margin: 0 0 10px 0;
+}
+
+.instruction-text-area {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+}
+
+.response-container {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.add-button {
+}

@@ -1,0 +1,21 @@
+.nav-container {
+  height: 100%;
+  padding: 5px 10px;
+  a {
+    margin-bottom: 6px;
+  }
+}
+
+mat-sidenav {
+  width: 250px;
+}
+
+mat-sidenav-container,
+mat-sidenav-content {
+  height: 100vh;
+}
+
+.active {
+  font-weight: bold;
+  color: #1976d2;
+}

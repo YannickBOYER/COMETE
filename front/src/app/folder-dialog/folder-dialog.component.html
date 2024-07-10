@@ -1,0 +1,12 @@
+<!-- folder-dialog.component.html -->
+<h1 mat-dialog-title>Ajouter un dossier</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Nom du dossier</mat-label>
+    <input matInput [(ngModel)]="folderName" />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Annuler</button>
+  <button mat-button (click)="onValidateClick()">Valider</button>
+</div>
